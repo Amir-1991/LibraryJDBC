@@ -49,14 +49,14 @@ public class SignUp {
                     break;
                 case birthDay:
                     inputUser = inputUsers.next();
-                    if (LocalDate.now().compareTo(LocalDate.parse(inputUser)) > illegalAge) {
+//                    if (LocalDate.now().compareTo(LocalDate.parse(inputUser)) > illegalAge) {
                         birthDay = LocalDate.parse(inputUser);
                         newUser.setBirthDay(birthDay);
                         break;
-                    } else {
-                        userAge = LocalDate.now().compareTo(LocalDate.parse(inputUser)) / 365;
-                        System.out.println("You Are " + userAge + " Years Old");
-                    }
+//                    } else {
+//                        userAge = LocalDate.now().compareTo(LocalDate.parse(inputUser)) / 365;
+//                        System.out.println("You Are " + userAge + " Years Old");
+//                    }
                 default:
                     System.out.println("Congratulations Your Register Account Has Successful Please LohIn In Your Account ");
                     LogIn.logIn(isFirstTime);
@@ -67,12 +67,12 @@ public class SignUp {
 
     public static void showSignInMessage(InputMsg inputMsg) {
         System.out.println("Please Enter Your " + inputMsg);
-        switch (inputMsg) {
-            case birthDay:
-                System.out.println("Date Format Is : yyyy-MM-dd Like 1991-11-10 \n" +
-                        "NOTE: Your Age Must Be Upper Than 18 Years Old \n" +
-                        "Good Luck ");
-        }
+//        switch (inputMsg) {
+//            case birthDay:
+//                System.out.println("Date Format Is : yyyy-MM-dd Like 1991-11-10 \n" +
+//                        "NOTE: Your Age Must Be Upper Than 18 Years Old \n" +
+//                        "Good Luck ");
+//        }
     }
 
 //    public static boolean isUnique(String inputUser) throws SQLException {

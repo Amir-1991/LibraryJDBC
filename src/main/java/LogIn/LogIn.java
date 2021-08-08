@@ -1,27 +1,29 @@
 package LogIn;
 
-import SignUp.SignUp;
-import Users.Users;
+import DBConnector.DBConnector;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LogIn {
     static Scanner logInUsers = new Scanner(System.in);
     static String logInUser;
     static String logInPassword;
+    static String userNameInput;
 
     enum LogInMsg {userName, password}
 
     static LogIn.LogInMsg[] enums = LogIn.LogInMsg.values();
 
-    public static void logIn(boolean isFirstTime) {
+    public static void logIn(boolean isFirstTime) throws SQLException {
         for (LogIn.LogInMsg logInMsg : enums) {
             isFirst(isFirstTime);
             showLogInMessage(logInMsg);
             logInUser = logInUsers.next();
             switch (logInMsg){
                 case userName:
-
+//                    isUser(logInUser);
+                    userNameInput = logInUser;
                     break;
                 case password:
                     logInPassword = logInUser;
@@ -29,7 +31,7 @@ public class LogIn {
                 default:break;
             }
         }
-        isUser(logInUser);
+        isUser(userNameInput);
     }
 
     public static void isFirst(boolean isFirstTime) {
@@ -39,7 +41,9 @@ public class LogIn {
         }
     }
 
-    public static boolean isUser(String logInUser){
+    public static boolean isUser(String logInUser) throws SQLException {
+        DBConnector.checkExist(logInUser);
+//        if ()
 
         return true;
     }
