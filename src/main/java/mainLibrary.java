@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class mainLibrary extends IOException {
     static int firsOperation;
     static String exception;
+    static boolean isFirstTime = false;
     public static void main(String[] args) {
         menu();
     }
@@ -24,7 +25,7 @@ public class mainLibrary extends IOException {
                     SignUp.signUp();
                     break;
                 case 2:
-                    LogIn.logIn();
+                    LogIn.logIn(isFirstTime);
                     break;
                 case 3:
                     System.out.println("Thanks For Watching Me :) \n" +
@@ -33,7 +34,7 @@ public class mainLibrary extends IOException {
                     System.out.println(exception);
             }
         }catch (Exception e){
-            exception = new Exception().getMessage();
+            e.printStackTrace();
         }
     }
 }
