@@ -1,5 +1,6 @@
 package SignUp;
 
+import DBConnector.UsersManagement;
 import LogIn.LogIn;
 import Users.Users;
 import com.github.eloyzone.jalalicalendar.DateConverter;
@@ -7,10 +8,13 @@ import com.github.eloyzone.jalalicalendar.DateConverter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SignUp {
-
+    static Connection connectionMySQL;
     static Users newUser = new Users();
     static Scanner inputUsers = new Scanner(System.in);
     static String inputUser;
@@ -21,18 +25,31 @@ public class SignUp {
     static int userAge;
     static LocalDate birthDayCompare;
     static DateConverter dateConverter = new DateConverter();
+    static List<String> userInformation = new ArrayList<>();
+    static int randomID;
 
-    enum InputMsg {userName, nationalCode, birthDay}
+    enum InputMsg {id, userName, nationalCode, birthDay, save}
 
     static InputMsg[] enums = InputMsg.values();
 
     public static void signUp() throws SQLException {
         for (SignUp.InputMsg inputMsg : enums) {
+            if (inputMsg.equals(InputMsg.save)) {
+                UsersManagement.creatUser(userInformation);
+                System.out.println("Congratulations Your Register Account Has Successful Please LohIn In Your Account ");
+                LogIn.logIn(isFirstTime);
+            }
             showSignInMessage(inputMsg);
             switch (inputMsg) {
+                case id:
+                    Random idInput = new Random();
+                    randomID = idInput.nextInt(1000 + 1);
+                    userInformation.add(0, String.valueOf(randomID));
+                    break;
                 case userName:
                     inputUser = inputUsers.next();
                     newUser.setUserName(inputUser);
+                    userInformation.add(newUser.getUserName());
                     break;
                 case nationalCode:
                     while (!inputUser.matches(regexPattern)) {
@@ -40,6 +57,8 @@ public class SignUp {
                         if (inputUser.matches(regexPattern)) {
                             newUser.setNationalCode(inputUser);
                             newUser.setPassword(inputUser);
+                            userInformation.add(newUser.getNationalCode());
+                            userInformation.add(newUser.getPassword());
                             break;
                         } else {
                             System.out.println("Please Enter Valid National Code \n" +
@@ -51,24 +70,27 @@ public class SignUp {
                 case birthDay:
                     inputUser = inputUsers.next();
 //                    if (LocalDate.now().compareTo(LocalDate.parse(inputUser)) > illegalAge) {
-                        birthDay = LocalDate.parse(inputUser);
-                        newUser.setBirthDay(birthDay);
-                        break;
+                    birthDay = LocalDate.parse(inputUser);
+                    newUser.setBirthDay(birthDay);
+                    userInformation.add(String.valueOf(newUser.getBirthDay()));
+                    break;
 //                    } else {
 //                        userAge = LocalDate.now().compareTo(LocalDate.parse(inputUser)) / 365;
 //                        System.out.println("You Are " + userAge + " Years Old");
 //                    }
+//                    break;
                 default:
-
-                    System.out.println("Congratulations Your Register Account Has Successful Please LohIn In Your Account ");
-                    LogIn.logIn(isFirstTime);
                     break;
+
             }
+
         }
     }
 
     public static void showSignInMessage(InputMsg inputMsg) {
-        System.out.println("Please Enter Your " + inputMsg);
+        if (!inputMsg.equals(InputMsg.id)) {
+            System.out.println("Please Enter Your " + inputMsg);
+        }
 //        switch (inputMsg) {
 //            case birthDay:
 //                System.out.println("Date Format Is : yyyy-MM-dd Like 1991-11-10 \n" +
