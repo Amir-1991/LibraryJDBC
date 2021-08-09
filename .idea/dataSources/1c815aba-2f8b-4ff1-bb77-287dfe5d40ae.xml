@@ -1282,9 +1282,9 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <SourceTextLength>792</SourceTextLength>
       <System>1</System>
     </view>
-    <table id="363" parent="3" name="articles"/>
-    <table id="364" parent="3" name="categories"/>
-    <table id="365" parent="3" name="users"/>
+    <table id="363" parent="3" name="article"/>
+    <table id="364" parent="3" name="category"/>
+    <table id="365" parent="3" name="user"/>
     <column id="366" parent="285" name="GRANTEE">
       <Position>1</Position>
       <DataType>varchar(292)|0s</DataType>
@@ -4880,115 +4880,148 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="1103" parent="363" name="PRIMARY">
+    <index id="1103" parent="363" name="USER_ID_FK">
+      <ColNames>USER_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="1104" parent="363" name="CATEGORY_ID_FK">
+      <ColNames>CATEGORY_ID</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="1105" parent="363" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="1104" parent="363" name="ARTICLES_ID_uindex">
+    <key id="1106" parent="363" name="ARTICLES_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>ARTICLES_ID_uindex</UnderlyingIndexName>
     </key>
-    <key id="1105" parent="363" name="ARTICLES_TITLE_uindex">
+    <key id="1107" parent="363" name="ARTICLES_TITLE_uindex">
       <ColNames>TITLE</ColNames>
       <UnderlyingIndexName>ARTICLES_TITLE_uindex</UnderlyingIndexName>
     </key>
-    <column id="1106" parent="364" name="ID">
+    <foreign-key id="1108" parent="363" name="USER_ID_FK">
+      <ColNames>USER_ID</ColNames>
+      <RefTableName>user</RefTableName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="1109" parent="363" name="CATEGORY_ID_FK">
+      <ColNames>CATEGORY_ID</ColNames>
+      <RefTableName>category</RefTableName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <column id="1110" parent="364" name="ID">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="1107" parent="364" name="TITLE">
+    <column id="1111" parent="364" name="TITLE">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="1108" parent="364" name="DESCRIPTIONS">
+    <column id="1112" parent="364" name="DESCRIPTIONS">
       <Position>3</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <index id="1109" parent="364" name="CATEGORIES_ID_uindex">
+    <column id="1113" parent="364" name="CREAT_BY">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="1114" parent="364" name="CATEGORIES_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="1110" parent="364" name="CATEGORIES_TITLE_uindex">
+    <index id="1115" parent="364" name="CATEGORIES_TITLE_uindex">
       <ColNames>TITLE</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="1111" parent="364" name="PRIMARY">
+    <index id="1116" parent="364" name="CREAT_BY_FK">
+      <ColNames>CREAT_BY</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="1117" parent="364" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="1112" parent="364" name="CATEGORIES_ID_uindex">
+    <key id="1118" parent="364" name="CATEGORIES_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>CATEGORIES_ID_uindex</UnderlyingIndexName>
     </key>
-    <key id="1113" parent="364" name="CATEGORIES_TITLE_uindex">
+    <key id="1119" parent="364" name="CATEGORIES_TITLE_uindex">
       <ColNames>TITLE</ColNames>
       <UnderlyingIndexName>CATEGORIES_TITLE_uindex</UnderlyingIndexName>
     </key>
-    <column id="1114" parent="365" name="ID">
+    <foreign-key id="1120" parent="364" name="CREAT_BY_FK">
+      <ColNames>CREAT_BY</ColNames>
+      <RefTableName>user</RefTableName>
+      <RefColNames>ID</RefColNames>
+    </foreign-key>
+    <column id="1121" parent="365" name="ID">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="1115" parent="365" name="USER_NAME">
+    <column id="1122" parent="365" name="USER_NAME">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="1116" parent="365" name="NATIONAL_CODE">
+    <column id="1123" parent="365" name="NATIONAL_CODE">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
+      <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="1117" parent="365" name="BIRTHDAY">
+    <column id="1124" parent="365" name="BIRTHDAY">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="1118" parent="365" name="PASSWORD">
+    <column id="1125" parent="365" name="PASSWORD">
       <Position>5</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <index id="1119" parent="365" name="USERS_ID_uindex">
+    <index id="1126" parent="365" name="USERS_ID_uindex">
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="1120" parent="365" name="USERS_USER_NAME_uindex">
+    <index id="1127" parent="365" name="USERS_USER_NAME_uindex">
       <ColNames>USER_NAME</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="1121" parent="365" name="USERS_NATIONAL_CODE_uindex">
+    <index id="1128" parent="365" name="USERS_NATIONAL_CODE_uindex">
       <ColNames>NATIONAL_CODE</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="1122" parent="365" name="PRIMARY">
+    <key id="1129" parent="365" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="1123" parent="365" name="USERS_ID_uindex">
+    <key id="1130" parent="365" name="USERS_ID_uindex">
       <ColNames>ID</ColNames>
       <UnderlyingIndexName>USERS_ID_uindex</UnderlyingIndexName>
     </key>
-    <key id="1124" parent="365" name="USERS_USER_NAME_uindex">
+    <key id="1131" parent="365" name="USERS_USER_NAME_uindex">
       <ColNames>USER_NAME</ColNames>
       <UnderlyingIndexName>USERS_USER_NAME_uindex</UnderlyingIndexName>
     </key>
-    <key id="1125" parent="365" name="USERS_NATIONAL_CODE_uindex">
+    <key id="1132" parent="365" name="USERS_NATIONAL_CODE_uindex">
       <ColNames>NATIONAL_CODE</ColNames>
       <UnderlyingIndexName>USERS_NATIONAL_CODE_uindex</UnderlyingIndexName>
     </key>

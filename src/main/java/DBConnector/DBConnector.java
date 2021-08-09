@@ -1,36 +1,19 @@
 package DBConnector;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBConnector extends SQLException {
     static Connection connectionMySQL;
-    static List<String> resultQuery = new ArrayList<>();
-    static int columnCount;
+    static String urlDB = "jdbc:mysql://localhost:3306/library";
+    static String userNameDB = "root";
+    static String passwordDB = "Amir0013981064";
 
-    public static boolean checkExist(String loginUser) throws SQLException {
-        connectionMySQL();
-        Statement st = connectionMySQL.createStatement();
-        PreparedStatement prep = connectionMySQL.prepareStatement("select * from users WHERE USER_NAME='" + loginUser + "' ;");
-        ResultSet rs = prep.executeQuery();
-        columnCount = rs.getMetaData().getColumnCount();
-        rs.next();
-        for (int elements = 1; elements <= columnCount; elements++) {
-            resultQuery.add(rs.getString(elements));
-            System.out.println(rs.getString(elements));
-        }
-        rs.close();
-        st.close();
-        return true;
-    }
-
-    public static void connectionMySQL() {
+    public static Connection connectionToDB() {
         try {
-            connectionMySQL = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Amir0013981064");
+            connectionMySQL = DriverManager.getConnection(urlDB, userNameDB, passwordDB);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return connectionMySQL;
     }
-
 }

@@ -14,12 +14,12 @@ public class mainLibrary extends IOException {
 
     public static void menu() {
         System.out.println("Welcome To Biggest Article Library In The World :D \n" +
-                "1:SignUp \n" +
-                "2:LogIn \n" +
+                "1: SignUp \n" +
+                "2: LogIn \n" +
                 "3: Exit ");
         Scanner scanner = new Scanner(System.in);
         firsOperation = scanner.nextInt();
-        try{
+        try {
             switch (firsOperation) {
                 case 1:
                     SignUp.signUp();
@@ -33,7 +33,7 @@ public class mainLibrary extends IOException {
                 default:
                     System.out.println(exception);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,6 +1,6 @@
 package LogIn;
 
-import DBConnector.DBConnector;
+import DBConnector.LogInChecker;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -10,6 +10,7 @@ public class LogIn {
     static String logInUser;
     static String logInPassword;
     static String userNameInput;
+    static boolean isExist;
 
     enum LogInMsg {userName, password}
 
@@ -20,32 +21,32 @@ public class LogIn {
             isFirst(isFirstTime);
             showLogInMessage(logInMsg);
             logInUser = logInUsers.next();
-            switch (logInMsg){
+            switch (logInMsg) {
                 case userName:
-//                    isUser(logInUser);
                     userNameInput = logInUser;
                     break;
                 case password:
                     logInPassword = logInUser;
                     break;
-                default:break;
+                default:
+                    break;
             }
         }
-        isUser(userNameInput);
+        isUser(userNameInput,logInPassword);
     }
 
     public static void isFirst(boolean isFirstTime) {
-        if (isFirstTime ==true){
+        if (isFirstTime) {
             System.out.println("By Default Your Password Is Your NationalCode Please After LogIn Change It \n" +
                     "Thanks Library Administrator");
         }
     }
 
-    public static boolean isUser(String logInUser) throws SQLException {
-        DBConnector.checkExist(logInUser);
-//        if ()
-
-        return true;
+    public static void isUser(String userNameInput,String logInPassword) throws SQLException {
+        isExist = LogInChecker.checkExist(userNameInput,logInPassword);
+        if (!isExist) {
+            System.out.println("This User Not Available !!!");
+        }
     }
 
     public static void showLogInMessage(LogIn.LogInMsg logInMsg) {
