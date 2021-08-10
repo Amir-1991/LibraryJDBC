@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class LogIn {
     static Scanner logInUsers = new Scanner(System.in);
-    static String logInUser;
     static String logInPassword;
     static String userNameInput;
+    static String logInUser;
     static boolean isExist;
 
     enum LogInMsg {userName, password}
@@ -32,18 +32,18 @@ public class LogIn {
                     break;
             }
         }
-        isUser(userNameInput,logInPassword);
+        isUser(userNameInput,logInPassword,isFirstTime);
     }
 
     public static void isFirst(boolean isFirstTime) {
         if (isFirstTime) {
-            System.out.println("By Default Your Password Is Your NationalCode Please After LogIn Change It \n" +
+            System.out.println("By Default Your Password Is Your NationalCode Please Change It \n" +
                     "Thanks Library Administrator");
         }
     }
 
-    public static void isUser(String userNameInput,String logInPassword) throws SQLException {
-        isExist = LogInChecker.checkExist(userNameInput,logInPassword);
+    public static void isUser(String userNameInput, String logInPassword, boolean isFirstTime) throws SQLException {
+        isExist = LogInChecker.checkExist(userNameInput,logInPassword,isFirstTime);
         if (!isExist) {
             System.out.println("This User Not Available !!!");
         }

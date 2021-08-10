@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public class Users {
 
-    private Long id;
-    private String userName;
     private String nationalCode;
     private LocalDate birthDay;
+    private String userName;
     private String password;
+    private Long id;
 
     public Long getId() {
         return id;

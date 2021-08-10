@@ -3,29 +3,22 @@ package SignUp;
 import DBConnector.UsersManagement;
 import LogIn.LogIn;
 import Users.Users;
-import com.github.eloyzone.jalalicalendar.DateConverter;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
+import java.util.Random;
+import java.util.List;
+import java.time.*;
 
 public class SignUp {
-    static Connection connectionMySQL;
-    static Users newUser = new Users();
-    static Scanner inputUsers = new Scanner(System.in);
-    static String inputUser;
-    static LocalDate birthDay;
-    static String regexPattern = "\\d{10}";
-    static boolean isFirstTime = true;
-    static int illegalAge = 6570;
-    static int userAge;
-    static LocalDate birthDayCompare;
-    static DateConverter dateConverter = new DateConverter();
     static List<String> userInformation = new ArrayList<>();
+    static Scanner inputUsers = new Scanner(System.in);
+    static String regexPattern = "\\d{10}";
+    static Users newUser = new Users();
+    static boolean isFirstTime = true;
+    static LocalDate birthDay;
+    static String inputUser;
     static int randomID;
 
     enum InputMsg {id, userName, nationalCode, birthDay, save}
@@ -69,21 +62,13 @@ public class SignUp {
                     break;
                 case birthDay:
                     inputUser = inputUsers.next();
-//                    if (LocalDate.now().compareTo(LocalDate.parse(inputUser)) > illegalAge) {
                     birthDay = LocalDate.parse(inputUser);
                     newUser.setBirthDay(birthDay);
                     userInformation.add(String.valueOf(newUser.getBirthDay()));
                     break;
-//                    } else {
-//                        userAge = LocalDate.now().compareTo(LocalDate.parse(inputUser)) / 365;
-//                        System.out.println("You Are " + userAge + " Years Old");
-//                    }
-//                    break;
                 default:
                     break;
-
             }
-
         }
     }
 
@@ -91,19 +76,5 @@ public class SignUp {
         if (!inputMsg.equals(InputMsg.id)) {
             System.out.println("Please Enter Your " + inputMsg);
         }
-//        switch (inputMsg) {
-//            case birthDay:
-//                System.out.println("Date Format Is : yyyy-MM-dd Like 1991-11-10 \n" +
-//                        "NOTE: Your Age Must Be Upper Than 18 Years Old \n" +
-//                        "Good Luck ");
-//        }
     }
-
-//    public static boolean isUnique(String inputUser) throws SQLException {
-//        DBConnector.checkUnique(inputUser);
-//
-//        if (inputUser.equals("1")) {
-//        }
-//        return true;
-//    }
 }

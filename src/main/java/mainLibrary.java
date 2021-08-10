@@ -1,13 +1,14 @@
-import LogIn.LogIn;
 import SignUp.SignUp;
+import LogIn.LogIn;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class mainLibrary extends IOException {
+    static boolean isFirstTime = false;
     static int firsOperation;
     static String exception;
-    static boolean isFirstTime = false;
+
     public static void main(String[] args) {
         menu();
     }

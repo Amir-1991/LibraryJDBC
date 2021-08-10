@@ -1,9 +1,9 @@
-package Categories;
+package Category;
 
-public class Categories {
-    private Long id;
-    private String title;
+public class Category {
     private String description;
+    private String title;
+    private Long id;
 
     public Long getId() {
         return id;

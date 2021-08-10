@@ -3,12 +3,13 @@ package Articles;
 import java.time.LocalDate;
 
 public class Articles {
-    private Long id;
+    private LocalDate creatDate;
+    private int isPublished;
+    private String content;
+    static int categoryId;
     private String title;
     private String brief;
-    private String content;
-    private LocalDate creatDate;
-    private boolean isPublished;
+    private Long id;
 
     public Long getId() {
         return id;
@@ -50,11 +51,19 @@ public class Articles {
         this.creatDate = creatDate;
     }
 
-    public boolean isPublished() {
+    public int isPublished() {
         return isPublished;
     }
 
-    public void setPublished(boolean published) {
+    public void setPublished(int published) {
         isPublished = published;
+    }
+
+    public static int getCategoryId() {
+        return categoryId;
+    }
+
+    public static void setCategoryId(int categoryId) {
+        Articles.categoryId = categoryId;
     }
 }
