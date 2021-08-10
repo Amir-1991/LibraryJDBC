@@ -1,7 +1,9 @@
 package ContentManagement;
 
+import static DBConnector.LogInChecker.userInfo;
 import DBConnector.ContentManagementDB;
 import Category.Category;
+import UserDashBoard.UserDashBoard;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,11 +22,12 @@ public class CategoryManagement {
 
     static CategoryManagement.InputMsg[] enums = CategoryManagement.InputMsg.values();
 
-    public static void creatCategory(List<String> userInfo) throws SQLException {
+    public static void creatCategory() throws SQLException {
         for (CategoryManagement.InputMsg inputMsg : enums) {
             if (inputMsg.equals(CategoryManagement.InputMsg.save)) {
                 ContentManagementDB.creatCategory(categoryInformation);
                 System.out.println("Congratulations Your Category Now Is Accessibility ");
+                UserDashBoard.dashBoardMenu();
             }
             if (inputMsg.equals(CategoryManagement.InputMsg.creatBy)) {
                 categoryInformation.add(userInfo.get(2));

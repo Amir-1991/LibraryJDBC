@@ -1,5 +1,9 @@
 package DBConnector;
 
+import static DBConnector.LogInChecker.userInfo;
+import static SignUp.SignUp.generateID;
+import static SignUp.SignUp.isFirstTime;
+
 import java.util.List;
 import java.sql.*;
 
@@ -20,21 +24,27 @@ public class UsersManagement {
         resultAllCategory = prepAllUserInfo.executeUpdate();
     }
 
-    public static void updateUserName(List<String> userInfo, String userInput) throws SQLException {
+    public static void updateUserName(String userInput) throws SQLException {
         statementUser = connectionMySQL.createStatement();
         prepAllUserInfo = connectionMySQL.prepareStatement("UPDATE user SET USER_NAME = (?) WHERE ID = (?);");
         prepAllUserInfo.setString(1, userInput);
         prepAllUserInfo.setString(2, userInfo.get(2));
         resultAllCategory = prepAllUserInfo.executeUpdate();
-        System.out.println("User Name Has Ben Changed Now We Called You As: "+ userInput+" ");
+        System.out.println("User Name Has Ben Changed Now We Called You As: " + userInput + " ");
     }
 
-    public static void updateUserPassword(List<String> userInfo, String newPassword) throws SQLException {
+    public static void updateUserPassword(String newPassword) throws SQLException {
         statementUser = connectionMySQL.createStatement();
         prepAllUserInfo = connectionMySQL.prepareStatement("UPDATE user SET PASSWORD = (?) WHERE ID = (?);");
         prepAllUserInfo.setString(1, newPassword);
-        prepAllUserInfo.setString(2, userInfo.get(2));
+        if (isFirstTime){
+            prepAllUserInfo.setString(2, generateID);
+        }else {
+            prepAllUserInfo.setString(2, userInfo.get(2));
+        }
         resultAllCategory = prepAllUserInfo.executeUpdate();
         System.out.println("Your Password Now Is Update");
     }
 }
+
+

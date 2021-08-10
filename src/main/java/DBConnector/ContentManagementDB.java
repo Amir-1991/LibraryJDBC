@@ -1,5 +1,7 @@
 package DBConnector;
 
+import static DBConnector.DBConnector.connectionMySQL;
+import static DBConnector.LogInChecker.userInfo;
 import com.mysql.cj.jdbc.result.ResultSetImpl;
 import com.mysql.cj.protocol.ResultsetRows;
 
@@ -8,7 +10,6 @@ import java.util.List;
 import java.sql.*;
 
 public class ContentManagementDB {
-    static Connection connectionMySQL = DBConnector.connectionToDB();
     static List<String> resultCategory = new ArrayList<>();
     static PreparedStatement prepManegeContent;
     static ResultsetRows categoryCountRow;
@@ -19,7 +20,7 @@ public class ContentManagementDB {
     static int elements;
     static int catID;
 
-    public static void removeArticle(List<String> userInfo, String userInput) throws SQLException {
+    public static void removeArticle(String userInput) throws SQLException {
         statementUser = connectionMySQL.createStatement();
         prepManegeContent = connectionMySQL.prepareStatement("DELETE FROM article WHERE TITLE =(?) AND USER_ID = (?);");
         prepManegeContent.setString(1, userInput);
@@ -49,7 +50,6 @@ public class ContentManagementDB {
         prepManegeContent.setString(7, articleInformation.get(6));
         prepManegeContent.setString(8, articleInformation.get(7));
         resultAllCategory = prepManegeContent.executeUpdate();
-        System.out.println("success");
     }
 
     public static void seeAllCategory() throws SQLException {

@@ -26,7 +26,7 @@ public class mainLibrary extends IOException {
                     SignUp.signUp();
                     break;
                 case 2:
-                    LogIn.logIn(isFirstTime);
+                    LogIn.logIn();
                     break;
                 case 3:
                     System.out.println("Thanks For Watching Me :) \n" +

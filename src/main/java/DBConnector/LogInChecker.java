@@ -1,5 +1,7 @@
 package DBConnector;
 
+import static DBConnector.DBConnector.connectionMySQL;
+import static SignUp.SignUp.isFirstTime;
 import UserDashBoard.UserDashBoard;
 
 import java.util.ArrayList;
@@ -7,9 +9,8 @@ import java.util.List;
 import java.sql.*;
 
 public class LogInChecker {
-    static Connection connectionMySQL = DBConnector.connectionToDB();
+    public static List<String> userInfo = new ArrayList<>();
     static List<String> resultQuery = new ArrayList<>();
-    static List<String> userInfo = new ArrayList<>();
     static PreparedStatement prepArticleFind;
     static PreparedStatement prepUserFind;
     static ResultSet resultSetArticle;
@@ -19,7 +20,7 @@ public class LogInChecker {
     static boolean isExist;
     static int elements;
 
-    public static boolean checkExist(String userNameInput, String logInPassword, boolean isFirstTime) throws SQLException {
+    public static boolean checkExist(String userNameInput, String logInPassword) throws SQLException {
         statement = connectionMySQL.createStatement();
         prepUserFind = connectionMySQL.prepareStatement("select * from user WHERE USER_NAME='" + userNameInput + "' ;");
         resultSetUser = prepUserFind.executeQuery();
@@ -31,7 +32,7 @@ public class LogInChecker {
             for (elements = 1; elements <= columnCount; elements++) {
                 resultQuery.add(resultSetUser.getString(elements));
             }
-            checkPassword(logInPassword, connectionMySQL, isFirstTime);
+            checkPassword(logInPassword);
             isExist = true;
         }
         connectionMySQL.close();
@@ -40,15 +41,15 @@ public class LogInChecker {
         return isExist;
     }
 
-    public static boolean checkPassword(String logInPassword, Connection connectionMySQL, boolean isFirstTime) throws SQLException {
+    public static boolean checkPassword(String logInPassword) throws SQLException {
         if (resultSetUser.getString("PASSWORD").equals(logInPassword)) {
             prepArticleFind = connectionMySQL.prepareStatement("select count(*) as countArticles,USER_ID from article WHERE USER_ID = '" + resultSetUser.getString("ID") + "';");
             resultSetArticle = prepArticleFind.executeQuery();
             resultSetArticle.next();
             userInfo.add(resultSetUser.getString("USER_NAME"));
             userInfo.add(resultSetArticle.getString("countArticles"));
-            userInfo.add(String.valueOf(resultSetArticle.getInt("USER_ID")));
-            UserDashBoard.dashBoard(userInfo, connectionMySQL, isFirstTime);
+            userInfo.add(resultSetUser.getString("ID"));
+            UserDashBoard.dashBoard();
             return true;
         } else {
             System.out.println("Your Password Is Incorrect");

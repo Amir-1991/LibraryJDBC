@@ -1,11 +1,12 @@
 package ContentManagement;
 
+import static DBConnector.LogInChecker.userInfo;
+
 import DBConnector.ContentManagementDB;
 import UserDashBoard.UserDashBoard;
 import Articles.Articles;
 
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,11 +25,11 @@ public class ArticleManagement {
 
     static ArticleManagement.InputMsg[] enums = ArticleManagement.InputMsg.values();
 
-    public static void creatArticle(List<String> userInfo, Connection connectionMySQL) throws SQLException {
+    public static void creatArticle() throws SQLException {
         for (ArticleManagement.InputMsg inputMsg : enums) {
             if (inputMsg.equals(InputMsg.save)) {
                 ContentManagementDB.creatArticle(articleInformation);
-                System.out.println("Congratulations Your Category Now Is Accessibility ");
+                System.out.println("Congratulations Your Article Now Is Accessibility ");
             }
             if (inputMsg.equals(InputMsg.creatDate)) {
                 articleInformation.add(String.valueOf(LocalDate.now()));
@@ -63,7 +64,7 @@ public class ArticleManagement {
                             "NOTE: Default isPublished Is False Means Just You Can See This Article \n" +
                             "For Watching AnyOne Press 1 Else 0 \n");
                     inputArticle = inputUser.next();
-                    articles.setPublished(Integer.parseInt(inputArticle));
+                    articles.setPublished(Integer.valueOf(inputArticle));
                     if (inputArticle.equals("1")) {
                         articleInformation.add(String.valueOf(1));
                     } else if (inputArticle.equals("0")) {
@@ -71,7 +72,6 @@ public class ArticleManagement {
                     }
                     break;
                 case categoryId:
-
                     ContentManagementDB.seeAllCategory();
                     System.out.println("Please Type Your Category: \n" +
                             "If Your Category Dose Not Exist Here Can Creat Category \n" +
@@ -79,11 +79,11 @@ public class ArticleManagement {
                     inputArticle = inputUser.next();
                     switch (inputArticle) {
                         case "y":
-                            CategoryManagement.creatCategory(userInfo);
+                            CategoryManagement.creatCategory();
                             break;
                         case "n":
                             System.out.println("GOOD LUCK " + userInfo.get(0) + "");
-                            UserDashBoard.dashBoardMenu(userInfo, connectionMySQL);
+                            UserDashBoard.dashBoardMenu();
                     }
                     catId = ContentManagementDB.findCategory(inputArticle);
                     articles.setCategoryId(catId);
@@ -95,11 +95,13 @@ public class ArticleManagement {
         }
     }
 
-    public static void showNewArticleMessage(ArticleManagement.InputMsg inputMsg) {
-        if (!inputMsg.equals(ArticleManagement.InputMsg.id)) {
+    public static void showNewArticleMessage(InputMsg inputMsg) {
+        if (!inputMsg.equals(InputMsg.id)) {
             if (!inputMsg.equals(InputMsg.creatDate)) {
-                if (!inputMsg.equals(ArticleManagement.InputMsg.save)) {
-                    System.out.println("Please Enter Your " + inputMsg);
+                if (!inputMsg.equals(InputMsg.save)) {
+                    if (!inputMsg.equals(InputMsg.userId)) {
+                        System.out.println("Please Enter Your " + inputMsg);
+                    }
                 }
             }
         }

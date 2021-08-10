@@ -1,7 +1,7 @@
 package LogIn;
 
 import DBConnector.LogInChecker;
-
+import static SignUp.SignUp.isFirstTime;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ public class LogIn {
 
     static LogIn.LogInMsg[] enums = LogIn.LogInMsg.values();
 
-    public static void logIn(boolean isFirstTime) throws SQLException {
+    public static void logIn() throws SQLException {
         for (LogIn.LogInMsg logInMsg : enums) {
             isFirst(isFirstTime);
             showLogInMessage(logInMsg);
@@ -32,7 +32,7 @@ public class LogIn {
                     break;
             }
         }
-        isUser(userNameInput,logInPassword,isFirstTime);
+        isUser(userNameInput,logInPassword);
     }
 
     public static void isFirst(boolean isFirstTime) {
@@ -42,8 +42,8 @@ public class LogIn {
         }
     }
 
-    public static void isUser(String userNameInput, String logInPassword, boolean isFirstTime) throws SQLException {
-        isExist = LogInChecker.checkExist(userNameInput,logInPassword,isFirstTime);
+    public static void isUser(String userNameInput, String logInPassword) throws SQLException {
+        isExist = LogInChecker.checkExist(userNameInput,logInPassword);
         if (!isExist) {
             System.out.println("This User Not Available !!!");
         }

@@ -16,7 +16,8 @@ public class SignUp {
     static Scanner inputUsers = new Scanner(System.in);
     static String regexPattern = "\\d{10}";
     static Users newUser = new Users();
-    static boolean isFirstTime = true;
+    public static boolean isFirstTime;
+    public static String generateID;
     static LocalDate birthDay;
     static String inputUser;
     static int randomID;
@@ -28,9 +29,11 @@ public class SignUp {
     public static void signUp() throws SQLException {
         for (SignUp.InputMsg inputMsg : enums) {
             if (inputMsg.equals(InputMsg.save)) {
+                generateID = userInformation.get(0);
                 UsersManagement.creatUser(userInformation);
                 System.out.println("Congratulations Your Register Account Has Successful Please LohIn In Your Account ");
-                LogIn.logIn(isFirstTime);
+                isFirstTime = true;
+                LogIn.logIn();
             }
             showSignInMessage(inputMsg);
             switch (inputMsg) {
