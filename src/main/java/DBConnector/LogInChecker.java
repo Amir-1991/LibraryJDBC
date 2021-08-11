@@ -1,7 +1,8 @@
 package DBConnector;
 
 import static DBConnector.DBConnector.connectionMySQL;
-import static SignUp.SignUp.isFirstTime;
+
+import LogIn.LogIn;
 import UserDashBoard.UserDashBoard;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class LogInChecker {
             return true;
         } else {
             System.out.println("Your Password Is Incorrect");
+            LogIn.logIn();
             return false;
         }
     }

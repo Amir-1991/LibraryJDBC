@@ -56,6 +56,7 @@ public class UserDashBoard {
                 break;
             case 4:
                 UserOperation.seeMyArticle();
+                UserDashBoard.dashBoard();
                 break;
             case 5:
                 userManagement();
@@ -75,7 +76,7 @@ public class UserDashBoard {
                 System.out.println("Please Enter New User Name: ");
                 userInput = scanner.next();
                 UsersManagement.updateUserName(userInput);
-                dashBoardMenu();
+                dashBoard();
                 break;
             case 2:
                 System.out.println("Please Enter OLd Password First:");
@@ -88,10 +89,10 @@ public class UserDashBoard {
                         userInput = scanner.next();
                     }while(!userInput.matches(regexPatternPassword));
                     UsersManagement.updateUserPassword(userInput);
-                    dashBoardMenu();
+                    dashBoard();
                 } else {
                     System.out.println("Your Password Dose Not Match Please For Change Password Go Back Again");
-                    dashBoardMenu();
+                    dashBoard();
                 }
                 break;
             case 3:
@@ -99,10 +100,10 @@ public class UserDashBoard {
                 System.out.println("For Remove Please Enter Article Name: ");
                 userInput = scanner.next();
                 ContentManagementDB.removeArticle(userInput);
-                dashBoardMenu();
+                dashBoard();
                 break;
             case 4:
-                dashBoardMenu();
+                dashBoard();
                 break;
         }
     }

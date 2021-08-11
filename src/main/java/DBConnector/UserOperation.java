@@ -3,10 +3,10 @@ package DBConnector;
 import static DBConnector.DBConnector.connectionMySQL;
 import static DBConnector.LogInChecker.userInfo;
 
-import ContentManagement.ArticleManagement;
-import ContentManagement.CategoryManagement;
 import com.mysql.cj.jdbc.result.ResultSetImpl;
 import com.mysql.cj.protocol.ResultsetRows;
+import ContentManagement.ArticleManagement;
+import UserDashBoard.UserDashBoard;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,63 +14,48 @@ import java.util.List;
 import java.sql.*;
 
 public class UserOperation {
+    static Scanner wantOperation = new Scanner(System.in);
     static List<String> categoryName = new ArrayList<>();
     static List<String> articleName = new ArrayList<>();
     static List<String> myArticle = new ArrayList<>();
-    static Scanner scanner = new Scanner(System.in);
-    static PreparedStatement prepAllCategory;
     static PreparedStatement prepAllArticle;
     static PreparedStatement prepMyArticle;
-    static ResultSet resultAllCategory;
-    static ResultSet resultAllArticle;
-    static ResultSet resultMyArticle;
-    static Statement statementUser;
-    static ResultsetRows allRowsCategory;
     static ResultsetRows allRowsArticles;
     static ResultsetRows allMyArticle;
-    static String scannerInput;
+    static ResultSet resultAllArticle;
+    static ResultSet resultMyArticle;
+    static String wantOperationInput;
+    static Statement statementUser;
+    static int allArt;
     static int myArt;
-    static int catID;
-    static int cat;
-    static int art;
 
     public static void seeArticles() throws SQLException {
         statementUser = connectionMySQL.createStatement();
-        prepAllArticle = connectionMySQL.prepareStatement("select art.TITLE as Articles,art.CATEGORY_ID as catID FROM article art order by art.CATEGORY_ID ASC ;");
-        prepAllCategory = connectionMySQL.prepareStatement("select cat.TITLE as Category, cat.ID as catID FROM category cat ;");
+        prepAllArticle = connectionMySQL.prepareStatement("select art.TITLE as Articles,cat.TITLE as Category FROM article art\n" +
+                "JOIN category cat on cat.ID = art.CATEGORY_ID WHERE art.IS_PUBLISHED = '1'\n" +
+                "order by art.CATEGORY_ID ASC ;");
         resultAllArticle = prepAllArticle.executeQuery();
-        resultAllCategory = prepAllCategory.executeQuery();
-        allRowsCategory = ((ResultSetImpl) resultAllCategory).getRows();
         allRowsArticles = ((ResultSetImpl) resultAllArticle).getRows();
-        for (cat = 0; cat <= allRowsCategory.size(); cat++) {
-            if (resultAllCategory.next()) {
-                categoryName.add(cat, resultAllCategory.getString("Category"));
-                System.out.println(categoryName.get(cat));
-                for (art = 0; art <= allRowsArticles.size(); art++) {
-                    if (resultAllArticle.next()) {
-                        catID = resultAllArticle.getInt("catID");
-                        while ((cat + 1) == catID) {
-                            articleName.add(art, resultAllArticle.getString("Articles"));
-                            System.out.println(art + ": " + articleName.get(art));
-                        }
-                        break;
-                    } else {
-                        System.out.println("No Article In Library Do You Want Creat New Library? y");
-                        scannerInput = scanner.next();
-                        if (scannerInput.equals("y")) {
-                            ArticleManagement.creatArticle();
-                            break;
-                        }
-                    }
-                }
+        System.out.println("Category Name \t Article Name ");
+        for (allArt = 0; allArt < allRowsArticles.size(); allArt++) {
+            if (resultAllArticle.next()) {
+                articleName.add((allArt), resultAllArticle.getString("Articles"));
+                categoryName.add((allArt), resultAllArticle.getString("Category"));
+                System.out.println((allArt + 1) + ": " + categoryName.get(allArt) + "\t \t \t" + articleName.get(allArt));
             } else {
-                System.out.println("No Category In Library Do You Want Creat New Category? y");
-                scannerInput = scanner.next();
-                if (scannerInput.equals("y")) {
-                    CategoryManagement.creatCategory();
+                System.out.println("There's No Article In Library Do You Want Creat Article? y/n ");
+                wantOperationInput = wantOperation.next();
+                switch (wantOperationInput) {
+                    case "y":
+                        ArticleManagement.creatArticle();
+                        break;
+                    case "n":
+                        System.out.println("Automatically We Send You In Your DashBoard ");
+                        break;
                 }
             }
         }
+        UserDashBoard.dashBoard();
     }
 
     public static void seeMyArticle() throws SQLException {
@@ -83,7 +68,16 @@ public class UserOperation {
                 myArticle.add((myArt), resultMyArticle.getString("TITLE"));
                 System.out.println((myArt + 1) + ": " + myArticle.get(myArt));
             } else {
-                System.out.println("Sorry You Dont Have Article");
+                System.out.println("Sorry You Dont Have Article Do You Want Creat Your First Article? y/n ");
+                wantOperationInput = wantOperation.next();
+                switch (wantOperationInput) {
+                    case "y":
+                        ArticleManagement.creatArticle();
+                        break;
+                    case "n":
+                        System.out.println("Automatically We Send You In Your DashBoard ");
+                        break;
+                }
             }
         }
     }

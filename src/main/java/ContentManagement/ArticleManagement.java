@@ -30,6 +30,7 @@ public class ArticleManagement {
             if (inputMsg.equals(InputMsg.save)) {
                 ContentManagementDB.creatArticle(articleInformation);
                 System.out.println("Congratulations Your Article Now Is Accessibility ");
+                UserDashBoard.dashBoard();
             }
             if (inputMsg.equals(InputMsg.creatDate)) {
                 articleInformation.add(String.valueOf(LocalDate.now()));
