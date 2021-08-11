@@ -16,7 +16,6 @@ import static DBConnector.LogInChecker.userInfo;
 import com.mysql.cj.jdbc.result.ResultSetImpl;
 import com.mysql.cj.protocol.ResultsetRows;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
@@ -29,7 +28,6 @@ import java.sql.*;
  * @since August 2021
  */
 public class ContentManagementDB {
-    static List<String> resultCategory = new ArrayList<>();
     static PreparedStatement prepManegeContent;
     static ResultsetRows categoryCountRow;
     static ResultSet resultSetCategory;
