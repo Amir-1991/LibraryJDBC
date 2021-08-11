@@ -11,13 +11,21 @@ import java.util.Random;
 import java.util.List;
 import java.time.*;
 
+/**
+ * This Class First Declare Static Variables Because This Variables
+ * Works In All Methods In This Class So One Time Declare And Any Time Chose It
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
 public class SignUp {
     static List<String> userInformation = new ArrayList<>();
     static Scanner inputUsers = new Scanner(System.in);
     static String regexPattern = "\\d{10}";
     static Users newUser = new Users();
-    public static boolean isFirstTime;
-    public static String generateID;
+    public static boolean isFirstTime; //isFirstTime Called Here For All Class Has Access
+    public static String generateID; //generateID Called Here For All Class Has Access
     static LocalDate birthDay;
     static String inputUser;
     static int randomID;
@@ -26,6 +34,12 @@ public class SignUp {
 
     static InputMsg[] enums = InputMsg.values();
 
+    /**
+     * This Method Give Any Information For Sign Up Users And After This
+     * Called Method Creat and Send Parameters For Creat
+     *
+     * @throws SQLException
+     */
     public static void signUp() throws SQLException {
         for (SignUp.InputMsg inputMsg : enums) {
             if (inputMsg.equals(InputMsg.save)) {
@@ -75,6 +89,12 @@ public class SignUp {
         }
     }
 
+    /**
+     * List Of Enums Parameter To This Method And Here Can Output Dynamical
+     * Information About LogIn Users
+     *
+     * @param inputMsg
+     */
     public static void showSignInMessage(InputMsg inputMsg) {
         if (!inputMsg.equals(InputMsg.id)) {
             System.out.println("Please Enter Your " + inputMsg);

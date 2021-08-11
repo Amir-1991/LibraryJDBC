@@ -1,5 +1,15 @@
 package DBConnector;
 
+/**
+ * userInfo And connectionMySQL Have All Information Of User And Connector TO DB This Information Are
+ * LogInChecker And DBConnector Class In That Class userInfo And connectionMySQL Is public And Here We
+ * Chose Values And Connection
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
+
 import static DBConnector.DBConnector.connectionMySQL;
 import static DBConnector.LogInChecker.userInfo;
 
@@ -13,6 +23,14 @@ import java.util.Scanner;
 import java.util.List;
 import java.sql.*;
 
+/**
+ * This Class First Declare Static Variables Because This Variables
+ * Works In All Methods In This Class So One Time Declare And Any Time Chose It
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
 public class UserOperation {
     static Scanner wantOperation = new Scanner(System.in);
     static List<String> myArticlesCat = new ArrayList<>();
@@ -30,6 +48,15 @@ public class UserOperation {
     static int allArt;
     static int myArt;
 
+    /**
+     * This Method Creat A Statement With Statement And Using A Query Running A ExecuteQuery And
+     * Export All Articles
+     *
+     * @throws SQLException
+     * @author Amir
+     * @version 1.0.0
+     * @since August 2021
+     */
     public static void seeArticles() throws SQLException {
         statementUser = connectionMySQL.createStatement();
         prepAllArticle = connectionMySQL.prepareStatement("select art.TITLE as Articles,cat.TITLE as Category FROM article art\n" +
@@ -59,6 +86,15 @@ public class UserOperation {
         UserDashBoard.dashBoard();
     }
 
+    /**
+     * This Method Creat A Statement With Statement And Using A Query Running A ExecuteQuery And
+     * Export All Articles Make By Current User
+     *
+     * @throws SQLException
+     * @author Amir
+     * @version 1.0.0
+     * @since August 2021
+     */
     public static void seeMyArticle() throws SQLException {
         statementUser = connectionMySQL.createStatement();
         prepMyArticle = connectionMySQL.prepareStatement("select art.TITLE as Article,cat.TITLE as Category From article art\n" +

@@ -1,7 +1,18 @@
 package UserDashBoard;
 
+/**
+ * userInfo And isFirstTime Have All Information Of User And This Information Are
+ * LogInChecker And SignUp Class In That Classes userInfo And isFirstTime Is public And Here We
+ * Chose Values
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
+
 import static DBConnector.LogInChecker.userInfo;
 import static SignUp.SignUp.isFirstTime;
+
 import ContentManagement.CategoryManagement;
 import ContentManagement.ArticleManagement;
 import DBConnector.ContentManagementDB;
@@ -13,6 +24,14 @@ import LogIn.LogIn;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * This Class First Declare Static Variables Because This Variables
+ * Works In All Methods In This Class So One Time Declare And Any Time Chose It
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
 public class UserDashBoard {
     static String regexPatternPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
     static Scanner scanner = new Scanner(System.in);
@@ -20,13 +39,20 @@ public class UserDashBoard {
     static boolean isCorrect;
     static String userInput;
 
+    /**
+     * dashBoard Class Show Information Of Current User Login Library
+     * About User Name And Count Of Articles If Users LogIn For First Time
+     * Show Message For Change Password
+     *
+     * @throws SQLException
+     */
     public static void dashBoard() throws SQLException {
         if (isFirstTime) {
             System.out.println("You Are New User Please Insert New Password: \n" +
                     "NOTE: Password Is Words And Digit Numbers Min 8 And max Is 20 Character");
             do {
                 userInput = scanner.next();
-            }while(!userInput.matches(regexPatternPassword));
+            } while (!userInput.matches(regexPatternPassword));
             UsersManagement.updateUserPassword(userInput);
             isFirstTime = false;
             LogIn.logIn();
@@ -37,6 +63,12 @@ public class UserDashBoard {
         dashBoardMenu();
     }
 
+    /**
+     * DashBoardMenu Class For Any Users After Login Show
+     * And Users Can Choice Any Operation Want To List
+     *
+     * @throws SQLException
+     */
     public static void dashBoardMenu() throws SQLException {
         System.out.println("1: See All Article \n" +
                 "2: Creat New Category \n" +
@@ -65,6 +97,12 @@ public class UserDashBoard {
         }
     }
 
+    /**
+     * userManagement Is Setting For Operation About Users Like
+     * Change Password Or User Name
+     *
+     * @throws SQLException
+     */
     public static void userManagement() throws SQLException {
         System.out.println("1: Change User Name \n" +
                 "2: Change Password \n" +
@@ -87,7 +125,7 @@ public class UserDashBoard {
                     userInput = scanner.next();
                     do {
                         userInput = scanner.next();
-                    }while(!userInput.matches(regexPatternPassword));
+                    } while (!userInput.matches(regexPatternPassword));
                     UsersManagement.updateUserPassword(userInput);
                     dashBoard();
                 } else {

@@ -2,6 +2,14 @@ package Users;
 
 import java.time.LocalDate;
 
+/**
+ * This Class Declare All Users Attribute And
+ * With Setter And Getter Methods Gives Values
+ *
+ * @author Amir
+ * @version 1.0.0
+ * @since August 2021
+ */
 public class Users {
 
     private String nationalCode;
@@ -9,14 +17,6 @@ public class Users {
     private String userName;
     private String password;
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
