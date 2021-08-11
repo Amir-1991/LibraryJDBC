@@ -15,6 +15,7 @@ import java.sql.*;
 
 public class UserOperation {
     static Scanner wantOperation = new Scanner(System.in);
+    static List<String> myArticlesCat = new ArrayList<>();
     static List<String> categoryName = new ArrayList<>();
     static List<String> articleName = new ArrayList<>();
     static List<String> myArticle = new ArrayList<>();
@@ -60,13 +61,17 @@ public class UserOperation {
 
     public static void seeMyArticle() throws SQLException {
         statementUser = connectionMySQL.createStatement();
-        prepMyArticle = connectionMySQL.prepareStatement("select TITLE From article WHERE USER_ID = '" + userInfo.get(2) + "'");
+        prepMyArticle = connectionMySQL.prepareStatement("select art.TITLE as Article,cat.TITLE as Category From article art\n" +
+                "JOIN category cat on cat.ID = art.CATEGORY_ID\n" +
+                "WHERE USER_ID = '" + userInfo.get(2) + "'");
         resultMyArticle = prepMyArticle.executeQuery();
         allMyArticle = ((ResultSetImpl) resultMyArticle).getRows();
+        System.out.println("Category Name \t Article Name ");
         for (myArt = 0; myArt < allMyArticle.size(); myArt++) {
             if (resultMyArticle.next()) {
-                myArticle.add((myArt), resultMyArticle.getString("TITLE"));
-                System.out.println((myArt + 1) + ": " + myArticle.get(myArt));
+                myArticlesCat.add((myArt), resultMyArticle.getString("Category"));
+                myArticle.add((myArt), resultMyArticle.getString("Article"));
+                System.out.println((myArt + 1) + ": " + myArticlesCat.get(myArt) + "\t \t \t" + myArticle.get(myArt));
             } else {
                 System.out.println("Sorry You Dont Have Article Do You Want Creat Your First Article? y/n ");
                 wantOperationInput = wantOperation.next();
