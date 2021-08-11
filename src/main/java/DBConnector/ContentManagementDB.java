@@ -112,10 +112,8 @@ public class ContentManagementDB {
         prepManegeContent = connectionMySQL.prepareStatement("SELECT TITLE,ID FROM category;");
         resultSetCategory = prepManegeContent.executeQuery();
         categoryCountRow = ((ResultSetImpl) resultSetCategory).getRows();
-
         for (elements = 0; elements < categoryCountRow.size(); elements++) {
             resultSetCategory.next();
-//            resultCategory.add((elements), resultSetCategory.getString("TITLE"));
             System.out.println((elements + 1) + ": " + resultSetCategory.getString("TITLE"));
         }
     }
